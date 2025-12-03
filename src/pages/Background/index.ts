@@ -46,10 +46,11 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   }
 });
 
-// Keep service worker alive
-chrome.alarms.create('keepAlive', { periodInMinutes: 1 });
-chrome.alarms.onAlarm.addListener((alarm) => {
-  if (alarm.name === 'keepAlive') {
-    console.log('[Upwork Job Scorer ML] Service worker keepalive ping');
-  }
-});
+// Keep service worker alive (optional - may not be needed for simple operations)
+// Uncomment if service worker needs to stay active
+// chrome.alarms.create('keepAlive', { periodInMinutes: 1 });
+// chrome.alarms.onAlarm.addListener((alarm) => {
+//   if (alarm.name === 'keepAlive') {
+//     console.log('[Upwork Job Scorer ML] Service worker keepalive ping');
+//   }
+// });

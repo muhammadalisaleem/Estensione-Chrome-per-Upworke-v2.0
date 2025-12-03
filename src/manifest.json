@@ -3,7 +3,7 @@
   "name": "Upwork Job Scorer ML",
   "version": "0.1.0",
   "description": "ML-enhanced extension to help freelancers identify high-quality Upwork jobs",
-  "permissions": ["storage"],
+  "permissions": ["storage", "alarms"],
   "host_permissions": ["https://www.upwork.com/*"],
   "action": {
     "default_popup": "popup.html",
