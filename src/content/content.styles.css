@@ -1,0 +1,97 @@
+/* Upwork Job Scorer ML - Content Script Styles */
+
+.upworkjobscoreext {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  margin-top: -3rem;
+  position: relative;
+  z-index: 10;
+}
+
+.upworkjobscoreext > h2 {
+  padding: 16px 20px;
+  border-radius: 50px;
+  color: white;
+  font-weight: 700;
+  font-size: 1.4rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin: 0;
+  min-width: 60px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.upworkjobscoreext > h2:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.greenJobSE {
+  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+  border: 3px solid #2e7d32;
+}
+
+.yellowJobSE {
+  background: linear-gradient(135deg, #ffd54f 0%, #ffeb3b 100%);
+  border: 3px solid #f9a825;
+  color: #333 !important;
+}
+
+.redJobSE {
+  background: linear-gradient(135deg, #ef5350 0%, #f44336 100%);
+  border: 3px solid #c62828;
+}
+
+.spamJobSE {
+  align-self: center;
+  background-color: #d32f2f;
+  color: white;
+  padding: 6px 12px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: pulse 2s infinite;
+  cursor: help;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.spamJobSE:hover {
+  background-color: #b71c1c;
+}
+
+/* Make sure badges don't interfere with card layout */
+[data-test='job-tile-list'] > section.air3-card-section {
+  position: relative;
+  overflow: visible;
+}
+
+/* Debug mode styling */
+.upworkjobscoreext[data-debug='true'] {
+  border: 2px dashed #2196f3;
+  background: rgba(33, 150, 243, 0.05);
+}
+
+.upworkjobscoreext[data-debug='true']::before {
+  content: '🔍 DEBUG';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  font-size: 10px;
+  color: #2196f3;
+  font-weight: bold;
+}
