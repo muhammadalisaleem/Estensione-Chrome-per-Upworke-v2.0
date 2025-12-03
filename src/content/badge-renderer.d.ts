@@ -1,12 +1,12 @@
 /**
  * Badge Renderer - Creates and displays score badges on job cards
  */
-import { BadgeConfig } from '../types';
+import { BadgeConfig, ScoreResult } from '../types';
 export declare class BadgeRenderer {
     /**
      * Create and append a score badge to a job card
      */
-    static renderBadge(card: Element, config: BadgeConfig): void;
+    static renderBadge(card: Element, config: BadgeConfig, scoreResult?: ScoreResult): void;
     /**
      * Create badge HTML element
      */
@@ -23,6 +23,10 @@ export declare class BadgeRenderer {
      * Create badge configuration from score result
      */
     static createBadgeConfig(score: number, isSpam: boolean, spamReasons: string[]): BadgeConfig;
+    /**
+     * Create tooltip with score breakdown
+     */
+    private static createTooltip;
     /**
      * Remove badge from a job card
      */

@@ -124,8 +124,8 @@ function processJobCard(card: HTMLElement): void {
       scoreResult.spamReasons
     );
 
-    // Render badge
-    BadgeRenderer.renderBadge(card, badgeConfig);
+    // Render badge with full score result for tooltip
+    BadgeRenderer.renderBadge(card, badgeConfig, scoreResult);
 
     console.log('[Upwork Job Scorer ML] Badge rendered for:', jobData.title);
   } catch (error) {

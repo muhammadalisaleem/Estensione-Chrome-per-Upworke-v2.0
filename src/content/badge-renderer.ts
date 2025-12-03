@@ -2,21 +2,21 @@
  * Badge Renderer - Creates and displays score badges on job cards
  */
 
-import { BadgeConfig } from '../types';
+import { BadgeConfig, ScoreResult } from '../types';
 
 export class BadgeRenderer {
   /**
    * Create and append a score badge to a job card
    */
-  static renderBadge(card: Element, config: BadgeConfig): void {
+  static renderBadge(card: Element, config: BadgeConfig, scoreResult?: ScoreResult): void {
     // Check if badge already exists
     const existingBadge = card.querySelector('.upworkjobscoreext');
     if (existingBadge) {
-      this.updateBadge(existingBadge as HTMLElement, config);
+      this.updateBadge(existingBadge as HTMLElement, config, scoreResult);
       return;
     }
 
-    const badge = this.createBadge(config);
+    const badge = this.createBadge(config, scoreResult);
     card.appendChild(badge);
 
     // Apply spam styling to card if needed
@@ -29,13 +29,27 @@ export class BadgeRenderer {
   /**
    * Create badge HTML element
    */
-  private static createBadge(config: BadgeConfig): HTMLElement {
+  private static createBadge(config: BadgeConfig, scoreResult?: ScoreResult): HTMLElement {
     const container = document.createElement('div');
     container.className = 'upworkjobscoreext';
 
     const scoreElement = document.createElement('h2');
     scoreElement.className = config.className;
     scoreElement.textContent = config.score.toFixed(1);
+
+    // Add tooltip if score result is provided
+    if (scoreResult) {
+      const tooltip = this.createTooltip(scoreResult);
+      scoreElement.appendChild(tooltip);
+      
+      // Show/hide tooltip on hover
+      scoreElement.addEventListener('mouseenter', () => {
+        tooltip.style.display = 'block';
+      });
+      scoreElement.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+      });
+    }
 
     container.appendChild(scoreElement);
 
@@ -54,11 +68,31 @@ export class BadgeRenderer {
   /**
    * Update existing badge with new config
    */
-  private static updateBadge(badge: HTMLElement, config: BadgeConfig): void {
+  private static updateBadge(badge: HTMLElement, config: BadgeConfig, scoreResult?: ScoreResult): void {
     const scoreElement = badge.querySelector('h2');
     if (scoreElement) {
       scoreElement.className = config.className;
       scoreElement.textContent = config.score.toFixed(1);
+      
+      // Remove old tooltip if exists
+      const oldTooltip = scoreElement.querySelector('.score-tooltip');
+      if (oldTooltip) {
+        oldTooltip.remove();
+      }
+      
+      // Add new tooltip if score result provided
+      if (scoreResult) {
+        const tooltip = this.createTooltip(scoreResult);
+        scoreElement.appendChild(tooltip);
+        
+        // Re-attach event listeners
+        scoreElement.addEventListener('mouseenter', () => {
+          tooltip.style.display = 'block';
+        });
+        scoreElement.addEventListener('mouseleave', () => {
+          tooltip.style.display = 'none';
+        });
+      }
     }
 
     // Update or add spam warning
@@ -104,6 +138,86 @@ export class BadgeRenderer {
       spamReasons,
       className: this.getBadgeClass(score),
     };
+  }
+
+  /**
+   * Create tooltip with score breakdown
+   */
+  private static createTooltip(scoreResult: ScoreResult): HTMLElement {
+    const tooltip = document.createElement('div');
+    tooltip.className = 'score-tooltip';
+    tooltip.style.display = 'none';
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'tooltip-header';
+    header.innerHTML = `<strong>Score Breakdown</strong> (${scoreResult.totalScore.toFixed(1)}/10)`;
+    tooltip.appendChild(header);
+
+    // Factors list
+    if (scoreResult.factors && scoreResult.factors.length > 0) {
+      const factorsList = document.createElement('div');
+      factorsList.className = 'tooltip-factors';
+
+      scoreResult.factors.forEach((factor) => {
+        const factorRow = document.createElement('div');
+        factorRow.className = 'tooltip-factor-row';
+        
+        const name = document.createElement('span');
+        name.className = 'factor-name';
+        name.textContent = factor.name;
+        
+        const score = document.createElement('span');
+        score.className = 'factor-score';
+        score.textContent = `${factor.score.toFixed(1)}/10`;
+        
+        // Color code the score
+        if (factor.score >= 7) {
+          score.style.color = '#4caf50';
+        } else if (factor.score >= 3) {
+          score.style.color = '#ff9800';
+        } else {
+          score.style.color = '#f44336';
+        }
+        
+        factorRow.appendChild(name);
+        factorRow.appendChild(score);
+        factorsList.appendChild(factorRow);
+      });
+
+      tooltip.appendChild(factorsList);
+    }
+
+    // Spam warning section
+    if (scoreResult.isSpam && scoreResult.spamReasons.length > 0) {
+      const spamSection = document.createElement('div');
+      spamSection.className = 'tooltip-spam';
+      
+      const spamHeader = document.createElement('div');
+      spamHeader.innerHTML = '<strong>⚠️ Spam Indicators:</strong>';
+      spamSection.appendChild(spamHeader);
+      
+      const reasonsList = document.createElement('ul');
+      reasonsList.className = 'spam-reasons-list';
+      scoreResult.spamReasons.forEach((reason) => {
+        const reasonItem = document.createElement('li');
+        reasonItem.textContent = reason;
+        reasonsList.appendChild(reasonItem);
+      });
+      
+      spamSection.appendChild(reasonsList);
+      tooltip.appendChild(spamSection);
+    }
+
+    // Footer with confidence
+    if (scoreResult.confidence !== undefined) {
+      const footer = document.createElement('div');
+      footer.className = 'tooltip-footer';
+      footer.textContent = `Confidence: ${(scoreResult.confidence * 100).toFixed(0)}%`;
+      tooltip.appendChild(footer);
+    }
+
+    return tooltip;
   }
 
   /**
