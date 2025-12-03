@@ -16,7 +16,8 @@ export declare class RuleScorer {
      */
     private static parseProposals;
     /**
-     * Calculate score based on number of proposals
+     * Calculate score based on number of proposals (lower competition = better)
+     * Uses logarithmic decay for smoother scoring
      */
     private static getProposalScore;
     /**
@@ -28,7 +29,7 @@ export declare class RuleScorer {
      */
     private static parseClientSpending;
     /**
-     * Calculate score based on client spending
+     * Calculate score based on client spending (refined scale with better granularity)
      */
     private static getClientPaid;
     /**
@@ -44,7 +45,7 @@ export declare class RuleScorer {
      */
     private static parseTimePosted;
     /**
-     * Calculate score based on posting time
+     * Calculate score based on posting time (enhanced with better time windows)
      */
     private static getJobPostingTime;
     /**
@@ -52,8 +53,32 @@ export declare class RuleScorer {
      */
     private static parseJobType;
     /**
-     * Check if job is spam based on description
+     * Check if job is spam based on description and title
      */
     private static isSpamJob;
+    /**
+     * Evaluate description quality based on multiple factors
+     */
+    private static getDescriptionQualityScore;
+    /**
+     * Score based on budget/rate reasonability
+     */
+    private static getBudgetScore;
+    /**
+     * Parse budget amount from text
+     */
+    private static parseBudgetAmount;
+    /**
+     * Parse hourly rate from text
+     */
+    private static parseHourlyRate;
+    /**
+     * Check if budget/rate is considered low
+     */
+    private static isBudgetLow;
+    /**
+     * Calculate client engagement score (composite metric)
+     */
+    private static getClientEngagementScore;
 }
 //# sourceMappingURL=rule-scorer.d.ts.map
