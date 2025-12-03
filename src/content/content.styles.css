@@ -9,6 +9,7 @@
   margin-top: -3rem;
   position: relative;
   z-index: 10;
+  overflow: visible !important;
 }
 
 .upworkjobscoreext > h2 {
@@ -79,7 +80,12 @@
 /* Make sure badges don't interfere with card layout */
 [data-test='job-tile-list'] > section.air3-card-section {
   position: relative;
-  overflow: visible;
+  overflow: visible !important;
+}
+
+/* Ensure parent elements allow overflow */
+[data-test='job-tile-list'] {
+  overflow: visible !important;
 }
 
 /* Debug mode styling */
@@ -101,21 +107,23 @@
 /* Score Tooltip Styles */
 .score-tooltip {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 8px);
   right: 0;
-  margin-top: 12px;
   background: white;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   padding: 12px;
   min-width: 280px;
   max-width: 320px;
-  z-index: 1000;
+  z-index: 10000;
   color: #333;
   font-size: 0.875rem;
   line-height: 1.4;
   text-align: left;
+  pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .score-tooltip::before {

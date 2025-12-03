@@ -42,12 +42,42 @@ export class BadgeRenderer {
       const tooltip = this.createTooltip(scoreResult);
       scoreElement.appendChild(tooltip);
       
-      // Show/hide tooltip on hover
+      // Show/hide tooltip on hover with slight delay
+      let showTimeout: NodeJS.Timeout;
+      let hideTimeout: NodeJS.Timeout;
+      
       scoreElement.addEventListener('mouseenter', () => {
-        tooltip.style.display = 'block';
+        clearTimeout(hideTimeout);
+        showTimeout = setTimeout(() => {
+          tooltip.style.display = 'block';
+          tooltip.style.opacity = '1';
+          console.log('[Tooltip] Showing tooltip');
+        }, 200);
       });
+      
       scoreElement.addEventListener('mouseleave', () => {
-        tooltip.style.display = 'none';
+        clearTimeout(showTimeout);
+        hideTimeout = setTimeout(() => {
+          tooltip.style.opacity = '0';
+          setTimeout(() => {
+            tooltip.style.display = 'none';
+          }, 200);
+          console.log('[Tooltip] Hiding tooltip');
+        }, 100);
+      });
+      
+      // Keep tooltip visible when hovering over it
+      tooltip.addEventListener('mouseenter', () => {
+        clearTimeout(hideTimeout);
+        tooltip.style.display = 'block';
+        tooltip.style.opacity = '1';
+      });
+      
+      tooltip.addEventListener('mouseleave', () => {
+        tooltip.style.opacity = '0';
+        setTimeout(() => {
+          tooltip.style.display = 'none';
+        }, 200);
       });
     }
 
@@ -85,12 +115,40 @@ export class BadgeRenderer {
         const tooltip = this.createTooltip(scoreResult);
         scoreElement.appendChild(tooltip);
         
-        // Re-attach event listeners
+        // Re-attach event listeners with delays
+        let showTimeout: NodeJS.Timeout;
+        let hideTimeout: NodeJS.Timeout;
+        
         scoreElement.addEventListener('mouseenter', () => {
-          tooltip.style.display = 'block';
+          clearTimeout(hideTimeout);
+          showTimeout = setTimeout(() => {
+            tooltip.style.display = 'block';
+            tooltip.style.opacity = '1';
+          }, 200);
         });
+        
         scoreElement.addEventListener('mouseleave', () => {
-          tooltip.style.display = 'none';
+          clearTimeout(showTimeout);
+          hideTimeout = setTimeout(() => {
+            tooltip.style.opacity = '0';
+            setTimeout(() => {
+              tooltip.style.display = 'none';
+            }, 200);
+          }, 100);
+        });
+        
+        // Keep tooltip visible when hovering over it
+        tooltip.addEventListener('mouseenter', () => {
+          clearTimeout(hideTimeout);
+          tooltip.style.display = 'block';
+          tooltip.style.opacity = '1';
+        });
+        
+        tooltip.addEventListener('mouseleave', () => {
+          tooltip.style.opacity = '0';
+          setTimeout(() => {
+            tooltip.style.display = 'none';
+          }, 200);
         });
       }
     }
@@ -147,6 +205,8 @@ export class BadgeRenderer {
     const tooltip = document.createElement('div');
     tooltip.className = 'score-tooltip';
     tooltip.style.display = 'none';
+    tooltip.style.opacity = '0';
+    tooltip.style.transition = 'opacity 0.2s ease';
 
     // Header
     const header = document.createElement('div');
