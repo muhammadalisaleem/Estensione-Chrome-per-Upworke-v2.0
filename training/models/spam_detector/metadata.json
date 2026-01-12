@@ -1,0 +1,45 @@
+{
+  "model_name": "spam_detector",
+  "model_type": "binary_classification",
+  "version": "1.0.0",
+  "created_at": "2026-01-13T00:34:10.034470",
+  "metrics": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "auc": 1.0,
+    "confusion_matrix": [
+      [
+        23,
+        0
+      ],
+      [
+        0,
+        9
+      ]
+    ]
+  },
+  "training_info": {
+    "dataset_size": 210,
+    "train_size": 147,
+    "val_size": 31,
+    "test_size": 32,
+    "epochs_trained": 20,
+    "final_train_loss": 0.0021765627898275852,
+    "final_val_loss": 0.00018087615899275988
+  },
+  "input_shape": [
+    200
+  ],
+  "output_shape": [
+    1
+  ],
+  "preprocessing": {
+    "tokenizer": "keras_tokenizer",
+    "max_words": 5000,
+    "max_sequence_length": 200,
+    "padding": "post",
+    "truncating": "post"
+  }
+}

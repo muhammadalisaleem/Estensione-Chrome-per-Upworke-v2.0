@@ -97,7 +97,8 @@ export class DOMExtractor {
       '[data-test="payment-verification-status"]'
     );
     const text = paymentElement?.textContent?.toLowerCase() || '';
-    return text.includes('payment verified') || text.includes('verified');
+    // Explicitly check for "verified" and not "unverified"
+    return text.includes('payment verified') && !text.includes('unverified');
   }
 
   /**

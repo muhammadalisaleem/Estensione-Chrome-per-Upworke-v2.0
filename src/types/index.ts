@@ -77,6 +77,65 @@ export interface ExtensionSettings {
 }
 
 /**
+ * Normalized ML features (0-1 scale)
+ */
+export interface MLFeatures {
+  // Structured features
+  proposalsNormalized: number; // 0-1
+  clientSpendingNormalized: number; // 0-1
+  clientRatingNormalized: number; // 0-1
+  timePostedNormalized: number; // 0-1
+  paymentVerifiedFlag: number; // 0 or 1
+  
+  // Text statistics
+  descriptionLength: number;
+  wordCount: number;
+  sentenceCount: number;
+  avgWordLength: number;
+  uppercaseRatio: number;
+  digitRatio: number;
+  
+  // Feature vector for TensorFlow.js
+  featureVector: number[];
+}
+
+/**
+ * Text features extracted from job description
+ */
+export interface TextFeatures {
+  cleanedText: string;
+  tokens: string[];
+  wordCount: number;
+  sentenceCount: number;
+  avgWordLength: number;
+  uppercaseRatio: number;
+  digitRatio: number;
+  specialCharRatio: number;
+}
+
+/**
+ * ML Model metadata
+ */
+export interface ModelMetadata {
+  name: string;
+  version: string;
+  size: number;
+  loadedAt?: Date;
+  inputShape: number[];
+  outputShape: number[];
+}
+
+/**
+ * ML Prediction result
+ */
+export interface MLPrediction {
+  score: number;
+  confidence: number;
+  modelVersion: string;
+  inferenceTimeMs: number;
+}
+
+/**
  * Message types for communication between content script and background
  */
 export enum MessageType {
@@ -84,6 +143,11 @@ export enum MessageType {
   GET_SETTINGS = 'GET_SETTINGS',
   UPDATE_SETTINGS = 'UPDATE_SETTINGS',
   COLLECT_FEEDBACK = 'COLLECT_FEEDBACK',
+  LOAD_ML_MODEL = 'LOAD_ML_MODEL',
+  ML_PREDICT = 'ML_PREDICT',
+  GET_MODEL_STATUS = 'GET_MODEL_STATUS',
+  DETECT_SPAM = 'DETECT_SPAM',
+  GET_SPAM_DETECTOR_STATUS = 'GET_SPAM_DETECTOR_STATUS',
 }
 
 export interface Message<T = any> {

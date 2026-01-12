@@ -6,6 +6,7 @@ yarn.lock
 # Build output
 build/
 dist/
+*.d.ts
 
 # Environment files
 .env
@@ -61,6 +62,8 @@ pip-log.txt
 pip-delete-this-directory.txt
 .pytest_cache/
 *.egg-info/
+*_temp.py
+*_backup.py
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -78,3 +81,6 @@ model_checkpoints/
 # Misc
 .cache/
 .eslintcache
+DEVELOPMENT_PLAN.txt
+*_PLAN.txt
+*_NOTES.txt

@@ -1,0 +1,29 @@
+# Python Training Environment for Upwork Job Scorer ML
+# Requirements for model training and TensorFlow.js export
+
+# Core ML libraries
+tensorflow==2.20.0
+tensorflowjs==4.22.0
+
+# Data manipulation
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Model training utilities
+scikit-learn>=1.3.0
+
+# Data collection and preprocessing
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+kaggle>=1.5.16
+
+# Data validation
+jsonschema>=4.17.0
+
+# Development tools (optional)
+# jupyter>=1.0.0
+# matplotlib>=3.7.0
+# seaborn>=0.12.0
+
+# Testing
+pytest>=7.4.0
