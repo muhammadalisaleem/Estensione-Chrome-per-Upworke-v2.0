@@ -2,7 +2,7 @@
 
 > AI-powered Chrome extension to help freelancers identify high-quality Upwork jobs and avoid spam
 
-[![Status](https://img.shields.io/badge/status-production%20ready-green)]() [![Model](https://img.shields.io/badge/model-LSTM-blue)]() [![Accuracy](https://img.shields.io/badge/accuracy-100%25-success)]()
+[![Status](https://img.shields.io/badge/status-production%20ready-green)]() [![Model](https://img.shields.io/badge/model-LSTM-blue)]()
 
 ## 🌟 Features
 
