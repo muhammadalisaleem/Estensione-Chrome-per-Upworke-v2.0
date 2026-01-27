@@ -8,7 +8,7 @@
 
 ### ✅ Implemented
 - **Rule-Based Scoring**: Real-time job quality assessment based on 8 key metrics
-- **AI Spam Detection**: Trained LSTM model with 100% accuracy on 210 labeled examples
+- **AI Spam Detection**: Trained LSTM model with 210 labeled examples
 - **Visual Badges**: Color-coded job quality indicators (Green/Yellow/Red)
 - **Smart Analysis**: Detects phone numbers, emails, urgency tactics, and 10+ spam patterns
 - **Instant Feedback**: Scores appear directly on Upwork job listings
