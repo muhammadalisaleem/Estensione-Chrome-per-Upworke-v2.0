@@ -101,7 +101,7 @@ export class MLEngine {
 
       const metadata: ModelMetadata = {
         name: modelName,
-        version: '1.0.0',
+        version: '2.0.0',
         size: modelSize,
         loadedAt: new Date(),
         inputShape: model.inputs[0].shape as number[],
@@ -153,11 +153,13 @@ export class MLEngine {
         totalSize += weight.size * 4; // Assuming float32 (4 bytes per value)
       });
     } else {
-      // For GraphModel, estimate from weights property
+      // For GraphModel, weights is already an array
       const weights = (model as tf.GraphModel).weights;
-      weights.forEach((weight: tf.Tensor) => {
-        totalSize += weight.size * 4;
-      });
+      if (Array.isArray(weights)) {
+        weights.forEach((weight: tf.Tensor) => {
+          totalSize += weight.size * 4;
+        });
+      }
     }
     return totalSize;
   }
@@ -196,7 +198,7 @@ export class MLEngine {
       return {
         score,
         confidence,
-        modelVersion: metadata?.version || '1.0.0',
+        modelVersion: metadata?.version || '2.0.0',
         inferenceTimeMs: inferenceTime,
       };
     } catch (error) {

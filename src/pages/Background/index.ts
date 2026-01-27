@@ -45,14 +45,10 @@ async function initializeSpamDetector(): Promise<void> {
     console.error('[Background] Spam Detector initialization failed:', error);
     throw error;
   }
-}and Spam Detector in background
-    initializeML().catch(console.error);
-    initializeSpamDetector().catch(console.error);
-  } else if (details.reason === 'update') {
-    console.log('[Upwork Job Scorer ML] Extension updated');
-    
-    // Re-initialize on update
-    initializeSpamDetector().catch(console.error
+}
+
+// Handle extension installation
+chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') {
     console.log('[Upwork Job Scorer ML] Extension installed');
     
@@ -66,10 +62,14 @@ async function initializeSpamDetector(): Promise<void> {
       mlModelsLoaded: false,
     });
 
-    // Initialize ML in background
+    // Initialize ML and Spam Detector in background
     initializeML().catch(console.error);
+    initializeSpamDetector().catch(console.error);
   } else if (details.reason === 'update') {
     console.log('[Upwork Job Scorer ML] Extension updated');
+    
+    // Re-initialize on update
+    initializeSpamDetector().catch(console.error);
   }
 });
 

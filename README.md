@@ -23,7 +23,7 @@
 
 ### Installation
 
-1. **Download or Build**
+1. **Download | Build**
    ```bash
    # Clone repository
    git clone <repository-url>
@@ -386,8 +386,11 @@ MIT License - See LICENSE file for details
 - TensorFlow.js team for browser ML capabilities
 - Chrome Extensions documentation and community
 
+## Disclaimer:
+This Chrome extension is provided as a decision-support tool for informational purposes only. While it aims to help freelancers evaluate job postings more effectively, it does not guarantee job success, responses, or hiring outcomes. Use of this extension is entirely at your own risk. The developer is not responsible for any issues, errors, or unintended consequences that may occur with your Upwork account or any actions taken based on the information provided by the extension. By using this extension, you acknowledge and accept these terms.
+
 ---
 
-**Made with ❤️ for freelancers** | **Version 2.0** | **Last Updated: January 13, 2026**
+**Made with ❤️ for freelancers by Muhammad Ali Saleem** | **Version 2.0** | **Last Updated: January 28, 2026**
 
 ⭐ Star this repo if it helps you land better jobs!

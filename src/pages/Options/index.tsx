@@ -83,17 +83,16 @@ const Options: React.FC = () => {
             </label>
           </div>
 
-          <div className="setting-item disabled">
+          <div className="setting-item">
             <div className="setting-info">
               <label>Show ML Scores</label>
-              <p>Display machine learning scores (Coming in Phase 2)</p>
+              <p>Display machine learning spam detection scores</p>
             </div>
             <label className="switch">
               <input
                 type="checkbox"
                 checked={settings.showMLScore}
                 onChange={() => handleChange('showMLScore')}
-                disabled
               />
               <span className="slider"></span>
             </label>
@@ -147,10 +146,9 @@ const Options: React.FC = () => {
 
         <section className="info-section">
           <h2>About</h2>
-          <p><strong>Version:</strong> 0.1.0 (Phase 1)</p>
-          <p><strong>Phase:</strong> Foundation & Basic Content Script</p>
-          <p><strong>Features:</strong> Rule-based scoring, Basic spam detection</p>
-          <p><strong>Coming Soon:</strong> ML models, Personalized matching, Advanced analytics</p>
+          <p><strong>Version:</strong> 2.0.0</p>
+          <p><strong>Features:</strong> Rule-based scoring, ML spam detection, Advanced analytics</p>
+          <p><strong>Coming Soon:</strong> Personalized matching, Job recommendations</p>
         </section>
       </main>
     </div>

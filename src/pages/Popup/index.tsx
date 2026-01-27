@@ -6,8 +6,8 @@ const Popup: React.FC = () => {
   return (
     <div className="popup-container">
       <div className="popup-header">
-        <h1>🎯 Upwork Job Scorer ML</h1>
-        <p className="version">v0.1.0 - Phase 1</p>
+        <h1>Estensione-Chrome-per-Upworke</h1>
+        <p className="version">v2.0.0</p>
       </div>
 
       <div className="popup-content">
@@ -19,7 +19,7 @@ const Popup: React.FC = () => {
           </div>
           <div className="status-item">
             <span className="status-label">Scoring:</span>
-            <span className="status-value">Rule-Based</span>
+            <span className="status-value">Rule-Based + ML</span>
           </div>
         </div>
 
@@ -45,7 +45,7 @@ const Popup: React.FC = () => {
             <li>✓ Real-time job scoring</li>
             <li>✓ Spam detection (regex)</li>
             <li>✓ Color-coded badges</li>
-            <li>⏳ ML models (Phase 2+)</li>
+            <li>✓ ML models </li>
           </ul>
         </div>
       </div>

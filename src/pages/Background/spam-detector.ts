@@ -210,6 +210,7 @@ export class SpamDetector {
    * @unused - Reserved for future LSTM integration
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // @ts-ignore - Unused method reserved for future use
   private prepareInput(text: string): number[] {
     const tokens = this.tokenize(text);
     return this.padSequence(tokens, this.maxSequenceLength);
