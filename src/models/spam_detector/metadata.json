@@ -1,45 +1,44 @@
 {
-  "model_name": "spam_detector",
+  "model_name": "spam_detector_v3",
   "model_type": "binary_classification",
-  "version": "2.0.0",
-  "created_at": "2026-01-13T00:34:10.034470",
+  "version": "3.0.0",
+  "created_at": "2026-02-03T23:43:40.252559",
+  "dataset": "Employment Scam Aegean Dataset (12,725 jobs)",
   "metrics": {
-    "accuracy": 1.0,
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1_score": 1.0,
-    "auc": 1.0,
+    "accuracy": 0.9716629381058911,
+    "precision": 0.684931506849315,
+    "recall": 0.7692307692307693,
+    "f1_score": 0.7246376811594203,
+    "auc": 0.9619061972510249,
     "confusion_matrix": [
       [
-        23,
-        0
+        2506,
+        46
       ],
       [
-        0,
-        9
+        30,
+        100
       ]
     ]
   },
   "training_info": {
-    "dataset_size": 210,
-    "train_size": 147,
-    "val_size": 31,
-    "test_size": 32,
-    "epochs_trained": 20,
-    "final_train_loss": 0.0021765627898275852,
-    "final_val_loss": 0.00018087615899275988
+    "dataset_size": 12725,
+    "train_size": 512,
+    "epochs_trained": 8,
+    "final_train_loss": 0.024873673915863037,
+    "final_val_loss": 0.11002838611602783,
+    "final_train_accuracy": 0.991295337677002,
+    "final_val_accuracy": 0.9764485955238342
   },
-  "input_shape": [
-    200
-  ],
-  "output_shape": [
-    1
-  ],
-  "preprocessing": {
-    "tokenizer": "keras_tokenizer",
-    "max_words": 5000,
-    "max_sequence_length": 200,
-    "padding": "post",
-    "truncating": "post"
+  "architecture": {
+    "max_words": 10000,
+    "max_sequence_length": 250,
+    "embedding_dim": 128,
+    "lstm_units": [
+      64,
+      32
+    ],
+    "dense_units": 32,
+    "dropout_rate": 0.4
   }
 }

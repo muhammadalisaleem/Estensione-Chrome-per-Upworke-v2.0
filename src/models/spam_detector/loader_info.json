@@ -1,0 +1,14 @@
+{
+  "model_format": "keras",
+  "loading_method": "direct_keras_load",
+  "requires_conversion": false,
+  "model_file": "keras_model.keras",
+  "tokenizer_file": "tokenizer.json",
+  "metadata_file": "metadata.json",
+  "notes": [
+    "Model is in Keras format",
+    "Can be loaded with tf.loadLayersModel() after conversion",
+    "Or use client-side tensorflowjs converter",
+    "Fallback: Use rule-based detection if loading fails"
+  ]
+}

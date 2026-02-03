@@ -33,7 +33,7 @@ function processExistingJobCards(): void {
   console.log(`[Upwork Job Scorer ML] Found ${jobCards.length} existing job cards`);
 
   jobCards.forEach((card) => {
-    processJobCard(card as HTMLElement);
+    processJobCard(card as HTMLElement).catch(console.error);
   });
 }
 
@@ -50,7 +50,7 @@ function observeJobCards(): void {
           // Check if the added node is a job card
           if (element.matches && element.matches(JOB_CARD_SELECTOR)) {
             console.log('[Upwork Job Scorer ML] New job card detected');
-            processJobCard(element);
+            processJobCard(element).catch(console.error);
           }
 
           // Check if the added node contains job cards
@@ -58,7 +58,7 @@ function observeJobCards(): void {
           if (jobCards && jobCards.length > 0) {
             console.log(`[Upwork Job Scorer ML] Found ${jobCards.length} new job cards in added node`);
             jobCards.forEach((card) => {
-              processJobCard(card as HTMLElement);
+              processJobCard(card as HTMLElement).catch(console.error);
             });
           }
         }
@@ -88,16 +88,16 @@ function observeJobCards(): void {
     const newCards = document.querySelectorAll(JOB_CARD_SELECTOR);
     newCards.forEach((card) => {
       if (!DOMExtractor.hasScoreBadge(card)) {
-        processJobCard(card as HTMLElement);
+        processJobCard(card as HTMLElement).catch(console.error);
       }
     });
   }, 5000);
 }
 
 /**
- * Process a single job card
+ * Process a single job card with hybrid ML + rule-based scoring
  */
-function processJobCard(card: HTMLElement): void {
+async function processJobCard(card: HTMLElement): Promise<void> {
   try {
     // Skip if already processed
     if (DOMExtractor.hasScoreBadge(card)) {
@@ -113,18 +113,64 @@ function processJobCard(card: HTMLElement): void {
 
     console.log('[Upwork Job Scorer ML] Processing job:', jobData.title);
 
-    // Calculate score
+    // PHASE 1: Calculate rule-based score (fast, synchronous)
     const scoreResult = RuleScorer.calculateScore(jobData);
-    console.log('[Upwork Job Scorer ML] Score calculated:', scoreResult.totalScore, scoreResult);
+    console.log('[Upwork Job Scorer ML] Rule-based score:', scoreResult.totalScore);
 
-    // Create badge config
+    // PHASE 2: Get ML spam detection (async, in background)
+    chrome.runtime.sendMessage(
+      {
+        type: 'DETECT_SPAM',
+        data: jobData,
+      },
+      (response) => {
+        if (response && response.success && response.data) {
+          const mlPrediction = response.data;
+          console.log('[Upwork Job Scorer ML] ML prediction:', mlPrediction);
+
+          // Update spam detection with ML results
+          if (mlPrediction.mlScore !== undefined) {
+            // Keep rule-based spam reasons and add ML reasons (combine, don't replace)
+            const ruleSpamReasons = scoreResult.spamReasons || [];
+            const mlReasons = mlPrediction.reasons || [];
+            
+            // Merge reasons (unique only)
+            const allReasons = [...ruleSpamReasons];
+            mlReasons.forEach((reason: string) => {
+              if (!allReasons.includes(reason)) {
+                allReasons.push(reason);
+              }
+            });
+            
+            // Use hybrid spam detection (either rules OR ML detected spam)
+            scoreResult.isSpam = scoreResult.isSpam || mlPrediction.isSpam;
+            scoreResult.spamReasons = allReasons;
+            
+            // Adjust total score if ML detected spam
+            if (mlPrediction.isSpam && mlPrediction.confidence > 0.7) {
+              scoreResult.totalScore = Math.min(scoreResult.totalScore, 3.0);
+            }
+          }
+
+          // Update badge with hybrid results
+          const badgeConfig = BadgeRenderer.createBadgeConfig(
+            scoreResult.totalScore,
+            scoreResult.isSpam,
+            scoreResult.spamReasons
+          );
+
+          BadgeRenderer.renderBadge(card, badgeConfig, scoreResult);
+        }
+      }
+    );
+
+    // PHASE 3: Render initial badge (immediate feedback)
     const badgeConfig = BadgeRenderer.createBadgeConfig(
       scoreResult.totalScore,
       scoreResult.isSpam,
       scoreResult.spamReasons
     );
 
-    // Render badge with full score result for tooltip
     BadgeRenderer.renderBadge(card, badgeConfig, scoreResult);
 
     console.log('[Upwork Job Scorer ML] Badge rendered for:', jobData.title);

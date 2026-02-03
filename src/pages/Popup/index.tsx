@@ -6,8 +6,8 @@ const Popup: React.FC = () => {
   return (
     <div className="popup-container">
       <div className="popup-header">
-        <h1>Estensione-Chrome-per-Upworke</h1>
-        <p className="version">v2.0.0</p>
+        <h1>Upwork Job Scorer ML</h1>
+        <p className="version">v2.1.0</p>
       </div>
 
       <div className="popup-content">

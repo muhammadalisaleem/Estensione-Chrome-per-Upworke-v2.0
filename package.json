@@ -1,13 +1,21 @@
 {
   "name": "upwork-job-scorer-ml",
-  "version": "2.0.0",
-  "description": "ML-enhanced Chrome extension to help freelancers identify high-quality Upwork jobs",
+  "version": "2.1.0",
+  "description": "ML-enhanced Chrome extension with trained spam detection (97.17% accuracy) to help freelancers identify high-quality Upwork jobs",
   "license": "MIT",
-  "author": "Your Name",
+  "author": {
+    "name": "Muhammad Ali Saleem",
+    "email": "ali.datavenger@gmail.com",
+    "url": "https://github.com/muhammadalisaleem"
+  },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/muhammadalisaleem/Estensione-Chrome-per-Upworke-v2.0"
   },
+  "bugs": {
+    "url": "https://github.com/muhammadalisaleem/Estensione-Chrome-per-Upworke-v2.0/issues"
+  },
+  "homepage": "https://github.com/muhammadalisaleem/Estensione-Chrome-per-Upworke-v2.0#readme",
   "scripts": {
     "build": "node utils/build.js",
     "build:prod": "cross-env NODE_ENV=production node utils/build.js",

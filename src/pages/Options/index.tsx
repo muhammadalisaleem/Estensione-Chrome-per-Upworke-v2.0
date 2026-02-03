@@ -45,7 +45,7 @@ const Options: React.FC = () => {
   return (
     <div className="options-container">
       <header className="options-header">
-        <h1>⚙️ Upwork Job Scorer ML - Settings</h1>
+        <h1>⚙️ Estensione-Chrome-per-Upworke - Settings</h1>
         <p>Configure how the extension works for you</p>
       </header>
 
@@ -146,8 +146,8 @@ const Options: React.FC = () => {
 
         <section className="info-section">
           <h2>About</h2>
-          <p><strong>Version:</strong> 2.0.0</p>
-          <p><strong>Features:</strong> Rule-based scoring, ML spam detection, Advanced analytics</p>
+          <p><strong>Version:</strong> 2.1.0</p>
+          <p><strong>Features:</strong> Rule-based scoring, ML spam detection (97.17% accuracy), Advanced analytics</p>
           <p><strong>Coming Soon:</strong> Personalized matching, Job recommendations</p>
         </section>
       </main>

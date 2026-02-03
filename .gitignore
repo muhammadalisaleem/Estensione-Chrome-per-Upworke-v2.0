@@ -48,6 +48,11 @@ src/models/**/*.pb
 training/data/raw/
 training/data/private/
 
+# Training data
+*.csv
+training/data/*.csv
+training/data/*.json
+
 # Python
 __pycache__/
 *.py[cod]

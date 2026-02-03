@@ -138,12 +138,50 @@ export class RuleScorer {
       finalScore = Math.min(finalScore, 3.0);
     }
 
+    // Calculate confidence based on data completeness
+    // More data available = higher confidence in score accuracy
+    let confidence = 0.5; // Base confidence (50%)
+    let dataPoints = 0;
+    let availableDataPoints = 0;
+
+    // Check which data points are available (use processed data)
+    if (jobData.proposalsCount !== null) { availableDataPoints++; dataPoints++; }
+    else { dataPoints++; }
+    
+    if (jobData.paymentVerified !== false) { availableDataPoints++; dataPoints++; }
+    else { dataPoints++; }
+    
+    if (processed.clientSpending > 0) { availableDataPoints++; dataPoints++; }
+    else { dataPoints++; }
+    
+    if (processed.clientRating > 0) { availableDataPoints++; dataPoints++; }
+    else { dataPoints++; }
+    
+    if (jobData.postedTime !== null) { availableDataPoints++; dataPoints++; }
+    else { dataPoints++; }
+    
+    if (jobData.description && jobData.description.length > 50) { availableDataPoints++; dataPoints++; }
+    else { dataPoints++; }
+    
+    if ((jobData.budget !== null) || (jobData.hourlyRate !== null)) {
+      availableDataPoints++; dataPoints++;
+    } else { dataPoints++; }
+
+    // Calculate confidence: more complete data = higher confidence
+    // Range: 50% (minimal data) to 95% (all data available)
+    confidence = 0.5 + (availableDataPoints / dataPoints) * 0.45;
+
+    // Reduce confidence if spam detected (less certain about exact score)
+    if (isSpam) {
+      confidence *= 0.8;
+    }
+
     return {
       totalScore: parseFloat(Math.max(0, Math.min(10, finalScore)).toFixed(1)),
       factors,
       isSpam,
       spamReasons: reasons,
-      confidence: 1.0, // Rule-based always has 100% confidence
+      confidence: parseFloat(confidence.toFixed(2)),
     };
   }
 
