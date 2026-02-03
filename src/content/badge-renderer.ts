@@ -269,13 +269,29 @@ export class BadgeRenderer {
       tooltip.appendChild(spamSection);
     }
 
-    // Footer with confidence
+    // Footer with confidence and ML score
+    const footer = document.createElement('div');
+    footer.className = 'tooltip-footer';
+    
     if (scoreResult.confidence !== undefined) {
-      const footer = document.createElement('div');
-      footer.className = 'tooltip-footer';
       footer.textContent = `Confidence: ${(scoreResult.confidence * 100).toFixed(0)}%`;
-      tooltip.appendChild(footer);
     }
+    
+    // Add ML score indicator if available (from type extension)
+    const mlScore = (scoreResult as any).mlScore;
+    const ruleScore = (scoreResult as any).ruleScore;
+    
+    if (mlScore !== undefined) {
+      const mlIndicator = document.createElement('div');
+      mlIndicator.className = 'ml-indicator';
+      mlIndicator.innerHTML = `🤖 ML: ${(mlScore * 100).toFixed(0)}% | 📋 Rules: ${(ruleScore * 100).toFixed(0)}%`;
+      mlIndicator.style.fontSize = '0.85em';
+      mlIndicator.style.marginTop = '4px';
+      mlIndicator.style.color = '#888';
+      footer.appendChild(mlIndicator);
+    }
+    
+    tooltip.appendChild(footer);
 
     return tooltip;
   }
